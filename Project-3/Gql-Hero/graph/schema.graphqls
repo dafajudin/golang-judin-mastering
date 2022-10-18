@@ -1,0 +1,27 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Hero {
+  id: ID!
+  nama_hero: String!
+  role: String!
+  emblem: String!
+  battle_spell: String!
+}
+
+type Query {
+  heroes: [Hero!]!
+  hero(id: ID!): Hero!
+}
+
+input HeroInput {
+  nama_hero: String!
+  role: String!
+  emblem: String!
+  battle_spell: String!
+}
+
+type Mutation {
+  createHero(input: HeroInput!): Hero
+}

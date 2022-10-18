@@ -1,0 +1,348 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Heroes API",
+        "description": "API for heroes data",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "description": "Base URL for the API",
+            "url": "https://localhost:8080"
+        }
+    ],
+    "paths": {
+        "/hero":{
+            "get":{
+                "security": [
+                    {
+                        "HeroAuth": []
+                    }
+                ],
+                "description": "Get all heroes",
+                "parameters":[
+                    {
+                        "name": "nama_hero",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true,
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "examples": {
+                            "Alucard":{
+                                "description": "hero name example called Alucard",
+                                "value": "Alucard"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Hero"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post":{
+                "security": [
+                    {
+                        "HeroAuth": []
+                    }
+                ],
+                "description": "Create a new hero",
+                "requestBody":{
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                               "$ref": "#/components/schemas/HeroInput"
+                            },
+                            "examples":{
+                                "Alucard":{
+                                    "description": "Create a new hero called coffe",
+                                    "value": {
+                                        "nama_hero": "Alucard",
+                                        "role": "Fighter",
+                                        "emblem": "Assasin",
+                                        "battle_spell": "Retribution"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201":{
+                        "description": "Created Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Hero"
+                                },
+                                "examples": {
+                                    "Alucard":{
+                                        "description": "hero is Created",
+                                        "value": {
+                                            "id": 1,
+                                            "nama_hero": "Alucard",
+                                            "role": "Fighter",
+                                            "emblem": "Assasin",
+                                            "battle_spell": "Retribution"
+                                        }
+                                    },
+                                    "Nana":{
+                                        "description": "Hero is Created",
+                                        "value": {
+                                            "id": 2,
+                                            "nama_hero": "Nana",
+                                            "role": "Mage",
+                                            "emblem": "Mage",
+                                            "battle_spell": "Healing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/hero/{heroID}":{
+            "get":{
+                "security": [
+                    {
+                        "HeroAuth": []
+                    }
+                ],
+                "description": "Get Hero by ID",
+                "parameters": [
+                    {
+                       "$ref": "#/components/parameters/heroID"
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Hero Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref" : "#/components/schemas/Hero"
+                                },
+                                "examples": {
+                                    "Alucard":{
+                                        "description": "hero is Created",
+                                        "value": {
+                                            "id": 1,
+                                            "nama_hero": "Alucard",
+                                            "role": "Fighter",
+                                            "emblem": "Assasin",
+                                            "battle_spell": "Retribution"
+                                        }
+                                    },
+                                    "Nana":{
+                                        "description": "Hero is Created",
+                                        "value": {
+                                            "id": 2,
+                                            "nama_hero": "Nana",
+                                            "role": "Mage",
+                                            "emblem": "Mage",
+                                            "battle_spell": "Healing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "security": [
+                    {
+                        "HeroAuth": []
+                    }
+                ],
+                "requestBody":{
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref" : "#/components/schemas/HeroInput"
+                            },
+                            "examples":{
+                                "Alucard":{
+                                    "description": "Update a new hero called coffe",
+                                    "value": {
+                                        "nama_hero": "Zilong",
+                                        "role": "Fighter",
+                                        "emblem": "Assasin",
+                                        "battle_spell": "Inspire"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "$ref" : "#/components/parameters/heroID"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Update Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref" : "#/components/schemas/Hero"
+                                },
+                                "examples": {
+                                    "Zilong":{
+                                        "description": "hero is Created",
+                                        "value": {
+                                            "id": 1,
+                                            "nama_hero": "Zilong",
+                                            "role": "Fighter",
+                                            "emblem": "Assasin",
+                                            "battle_spell": "Inspire"
+                                        }
+                                    },
+                                    "Nana":{
+                                        "description": "Hero is Created",
+                                        "value": {
+                                            "id": 2,
+                                            "nama_hero": "Nana",
+                                            "role": "Mage",
+                                            "emblem": "Mage",
+                                            "battle_spell": "Healing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }    
+            },
+            "delete":{
+                "security": [
+                    {
+                        "HeroAuth": []
+                    }
+                ],
+                "description": "Delete Hero",           
+                "parameters": [
+                    {
+                        "$ref" : "#/components/parameters/heroID"
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "Delete a hero Succed",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "message":{
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "Delete Succed":{
+                                        "description": "hero is deleted Successfully",
+                                        "value": {
+                                            "message": "Delete Succed"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes":{
+            "HeroAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "Hero":{
+                "type": "object",
+                "properties": {
+                    "id":{
+                        "type": "integer"
+                    },
+                    "nama_hero": {
+                        "type": "string"
+                    },
+                    "role":{
+                        "type":"string"
+                    },
+                    "emblem":{
+                        "type": "string"
+                    },
+                    "battle_spell":{
+                        "type": "string"
+                    }
+                }
+            },
+            "HeroArray":{
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Hero"
+                }
+            },
+            "HeroInput":{
+                "type": "object",
+                "properties": {
+                    "nama_hero": {
+                        "type": "string"
+                    },
+                    "role":{
+                        "type":"string"
+                    },
+                    "emblem":{
+                        "type": "string"
+                    },
+                    "battle_spell":{
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "parameters": {
+           "heroID":{
+                "description": "Hero ID",
+                "in": "path",
+                "name": "heroID",
+                "schema":{
+                    "type": "integer"
+                },
+                "required": true,
+                "examples": {
+                    "Alucard":{
+                        "description": "ID for Hero",
+                        "value": 1
+                    }
+                }
+            }
+        }
+    }
+}
